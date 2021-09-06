@@ -1,0 +1,5 @@
+requests
+uwsgi
+flask
+Werkzeug
+prometheus_client

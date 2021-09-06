@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "custom-exporter-deployment"
+  labels:
+    app: "prometheus-custom-exporter"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "prometheus-custom-exporter"
+  template:
+    metadata:
+      labels:
+        app: "prometheus-custom-exporter"
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+    spec:
+      containers:
+      - name: "prometheus-custom-exporter"
+        image: sidmit/custom-exporter-gpu-metric:11.0
+        securityContext:
+          privileged: true
+        ports:
+        - name: "metrics"
+          containerPort: 8000
+
+---
+
+kind: Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: "prometheus-custom-exporter-service"
+  labels:
+    app: "prometheus-custom-exporter"
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '8000'
+spec:
+  selector:
+    app: "prometheus-custom-exporter"
+  ports:
+  - name: "metrics"
+    port: 8000

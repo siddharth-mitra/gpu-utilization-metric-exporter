@@ -12,5 +12,5 @@ In our case since we require the GPU utilization value of all the GPUs in the sy
 This projects uses a custom python script which calculates the GPU memory utilization value for only the GPUs currently being utilized. Then makes the calcluated metric available for the Prometheus server to scrape.  
 
 ## Architecture
-![Exporter Architecture](https://github.com/siddharth-mitra/gpu-utilization-metric-exporter.git/images/custom-exporter.png)
+![Exporter Architecture](https://github.com/siddharth-mitra/gpu-utilization-metric-exporter/blob/main/images/custom-exporter.png)
 

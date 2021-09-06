@@ -13,7 +13,6 @@ In our case since we require the GPU utilization value of all the GPUs in the sy
 
 ## How does it Work?
 The following figure describes the architecture of the system:
-### Architecture
 ![Exporter Architecture](https://github.com/siddharth-mitra/gpu-utilization-metric-exporter/blob/main/images/custom-exporter.png)
 
 The solution relies on the Data Center GPU Manager(DCGM) exporters to pull and make available GPU related metrics. These metrics are then scraped by the Prometheus server, where they are stored in a time series database. To compute the GPU memory utilization value of only the GPU resources being utilized at thaat instant, a component named 'custom exporter' is used. The component contains a python script running in a container. The script computes the GPU memory utilization of the GPU resources being utilized and makes them available for the prometheus server to scrape and store. Once the new metric is stored in the prometheus server, a prometheus adapter uses PromQL to compute the rolling average of the GPU memory utilization and exposes it as part of the custom metrics API endpoint. An HPA can then receive the average GPU memory utilization value by accessing this endpoint. 

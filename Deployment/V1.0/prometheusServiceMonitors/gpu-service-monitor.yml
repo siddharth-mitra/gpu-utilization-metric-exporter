@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: gpu-metrics-servicemonitor
+  labels:
+    app: prometheus
+  namespace: kfserving-monitoring
+spec:
+  namespaceSelector:
+    any: true
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "dcgm-exporter"
+      app.kubernetes.io/version: "2.1.1"
+  endpoints:
+  - port: metrics
+    path: '/metrics'
+    interval: 5s

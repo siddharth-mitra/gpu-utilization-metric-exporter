@@ -1,8 +1,9 @@
 # gpu-utilization-metric-exporter
- A Prometheus exporter to export the GPU memory utilization of the system as a metric to be monitored.
+ A Prometheus exporter to export the GPU memory utilization of the Kubernetes cluster (only the GPUs being used) as a metric to be monitored.
  
 ## What is GPU memory utilization?
-GPU memory utilization represents the percentage of time over the last second that the GPU’s memory controller was being utilized to either read or write from memory.
+GPU memory utilization represents the *percentage of time over the last second that the GPU’s memory controller was being utilized to either read or write from memory*.
+One use-case for monitoring the cluster's GPU memory utilization could be to make a scaling decision. The current memory utilization value would be pitched against a user-defined target memory utilization value and a decision to scale up or down could be made as a consequence. 
 
 ## Why is it required?
 GPU utilization metrics aren't readily available on all Kubernetes platforms. One way to use the GPU utilization metrics is to use the metrics provided by NVIDIA DCGM. The DCGM exporters expose the GPU metrics (in the Prometheus format) leveraging NVIDIA DCGM. The metrics are then scraped by the Prometheus server and made available for monitoring. The memory utilization values for each GPU is exposed as the instant-vector metric - DCGM_FI_DEV_MEM_COPY_UTIL.
